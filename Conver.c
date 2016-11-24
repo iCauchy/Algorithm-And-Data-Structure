@@ -1,3 +1,9 @@
+/* Cauchy 
+This file was finished at 25th,Nov
+Conver from Dec to Bin
+Bin to Otc
+Bin to Hex
+*/
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
