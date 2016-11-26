@@ -38,7 +38,7 @@ typedef struct
 	int stacksize;//当前已经分配的储存
 }SqStack;
 int TreeDepth(BiTree T);
-Status ToVisit(ElemType e);
+Status Print(ElemType e);
 Status CreatBiTree(BiTree *T);
 Status InitStack (SqStack *S);
 Status GetTop(SqStack *S,SElemType *e);
@@ -58,11 +58,11 @@ int main()
 	CreatBiTree(&Tree);
 	depth = TreeDepth(Tree);
 	printf("The PreOrder is :\n");
-	PreOrderTraverse(&Tree,ToVisit);
+	PreOrderTraverse(&Tree,Print);
 	printf("\nThe InOrder is :\n");
-	InOrderTraverse(Tree,ToVisit);
+	InOrderTraverse(Tree,Print);
 	printf("\nThe PostOrder is :\n");
-	PostOrderTraverse(&Tree,ToVisit);
+	PostOrderTraverse(&Tree,Print);
 	printf("\nLevel Traverse is : \n");
 	LevelTraverse(Tree,depth);
 	printf("\n");
@@ -156,11 +156,11 @@ Status PreOrderTraverse(BiTree *T,Status (*Visit)(ElemType e))
 {
 	if(*T)
 	{
-		if(ToVisit((*T) -> data))
+		if(Visit((*T) -> data))
 		{
-			if(PreOrderTraverse(&((*T) -> lchild),ToVisit))
+			if(PreOrderTraverse(&((*T) -> lchild),Print))
 			{
-				if(PreOrderTraverse(&((*T) -> rchild),ToVisit))
+				if(PreOrderTraverse(&((*T) -> rchild),Print))
 				{
 					return OK;
 				}
@@ -174,7 +174,7 @@ Status PreOrderTraverse(BiTree *T,Status (*Visit)(ElemType e))
 	}
 }
 /*
-Status InOrderTraverse(BiTree T,Status(*visit)(ElemType e))
+Status InOrderTraverse(BiTree T,Status(*Visit)(ElemType e))
 {
    SqStack S;
    InitStack(&S);
@@ -191,7 +191,7 @@ Status InOrderTraverse(BiTree T,Status(*visit)(ElemType e))
        if(StackEmpty(&S))
        {
            Pop(&S,&p);
-           if(!visit(p -> data))
+           if(!Visit(p -> data))
             return ERROR;
            Push(&S,p -> rchild);
        }
@@ -216,7 +216,7 @@ Status InOrderTraverse(BiTree T,Status (*Visit)(ElemType e))
 		else
 		{
 			Pop(&S,&p);
-			if(!ToVisit(p -> data))
+			if(!Visit(p -> data))
 			return ERROR;
 			p = p -> rchild;
 		}
@@ -225,7 +225,7 @@ Status InOrderTraverse(BiTree T,Status (*Visit)(ElemType e))
 	
 }
 
-Status ToVisit(ElemType e)
+Status Print(ElemType e)
 {
 	printf("%c",e);
 	return OK;
@@ -234,11 +234,11 @@ Status PostOrderTraverse(BiTree *T,Status (*Visit)(ElemType e))
 {
 	if(*T)
 	{
-		if(PostOrderTraverse(&((*T) -> lchild),ToVisit))
+		if(PostOrderTraverse(&((*T) -> lchild),Print))
 		{
-			if(PostOrderTraverse(&((*T) -> rchild),ToVisit))
+			if(PostOrderTraverse(&((*T) -> rchild),Print))
 			{
-				if(ToVisit((*T) -> data))
+				if(Visit((*T) -> data))
 				{
 					return OK;
 				}
@@ -274,7 +274,7 @@ Status PrintTreeLevel(BiTree T,int level)
 	}
 	if(level == 1) 
 	{
-		ToVisit(T -> data);
+		Print(T -> data);
 		return OK;
 	}
 	PrintTreeLevel(T -> lchild,level -1);
